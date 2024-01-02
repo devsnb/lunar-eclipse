@@ -1,0 +1,17 @@
+# node modules
+node_modules/
+
+# build files
+dist/
+out/
+
+# env files
+.env
+.env.*
+env.test.json
+env.development.json
+env.production.json
+
+
+# log files
+*.log
