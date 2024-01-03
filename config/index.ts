@@ -1,18 +1,22 @@
 import convict from 'convict'
+import 'dotenv/config'
 
 // application log levels
 const logLevels = ['error', 'warn', 'info', 'http', 'verbose', 'debug', 'silly']
 
+// application environments
+const environments = ['production', 'development', 'test']
+
 const config = convict({
 	env: {
 		doc: 'The application environment.',
-		format: ['production', 'development', 'test'],
+		format: environments,
 		default: 'development',
 		env: 'NODE_ENV',
 		arg: 'NODE_ENV'
 	},
 	port: {
-		doc: 'The port to bind.',
+		doc: 'The port to start the application on',
 		format: 'port',
 		default: 8080,
 		env: 'PORT'
@@ -30,6 +34,13 @@ const config = convict({
 			default: 'app.log',
 			env: 'LOG_FILENAME'
 		}
+	},
+	databaseUrl: {
+		doc: 'MongoDB connection URL',
+		format: String,
+		default: null,
+		nullable: true,
+		env: 'DATABASE_URL'
 	}
 })
 

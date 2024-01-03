@@ -1,24 +1,27 @@
 {
 	"name": "lunar-eclipse",
+	"description": "An e-commerce backend",
+	"author": "Snehangshu Biswas",
+	"license": "ISC",
 	"version": "1.0.0",
 	"engines": {
 		"node": ">=20.10.0",
 		"npm": ">=10.2.3"
 	},
-	"description": "An e-commerce backend",
 	"main": "index.js",
 	"scripts": {
 		"start": "cross-env NODE_ENV=production node dist/main.js",
 		"dev": "cross-env NODE_ENV=development tsx watch main.ts",
 		"build": "npx tsc"
 	},
-	"author": "Snehangshu Biswas",
-	"license": "ISC",
 	"dependencies": {
 		"chalk": "^5.3.0",
 		"convict": "^6.2.4",
 		"cross-env": "^7.0.3",
+		"dotenv": "^16.3.1",
 		"express": "^4.18.2",
+		"i": "^0.3.7",
+		"npm": "^10.2.5",
 		"winston": "^3.11.0"
 	},
 	"devDependencies": {
