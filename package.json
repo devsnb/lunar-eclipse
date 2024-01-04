@@ -12,10 +12,11 @@
 	"scripts": {
 		"start": "cross-env NODE_ENV=production node dist/main.js",
 		"dev": "cross-env NODE_ENV=development tsx watch main.ts",
-		"build": "npx tsc"
+		"build": "rm -rf ./dist && npx tsc"
 	},
 	"dependencies": {
 		"@prisma/client": "^5.7.1",
+		"argon2": "^0.31.2",
 		"chalk": "^5.3.0",
 		"convict": "^6.2.4",
 		"cross-env": "^7.0.3",
@@ -23,7 +24,8 @@
 		"express": "^4.18.2",
 		"i": "^0.3.7",
 		"npm": "^10.2.5",
-		"winston": "^3.11.0"
+		"winston": "^3.11.0",
+		"zod": "^3.22.4"
 	},
 	"devDependencies": {
 		"@types/convict": "^6.1.6",

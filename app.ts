@@ -1,9 +1,17 @@
-import express, { Express, Request, Response } from 'express'
+import express, { Express } from 'express'
+import router from '@/routes'
+import { ExceptionHandler } from '@/middlewares'
 
 const app: Express = express()
 
-app.get('/', (_: Request, res: Response) => {
-	// res.send('Express + TypeScript Server!!')
-})
+// parse incoming request body
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+
+// registering the router
+app.use('/api', router)
+
+// registering central error handler
+app.use(ExceptionHandler)
 
 export default app

@@ -1,6 +1,6 @@
 import app from '@/app'
 import config from '@/config'
-import logger from '@/utils/logger'
+import logger from '@/common/logger'
 
 const main = async () => {
 	const port = config.get('port')
