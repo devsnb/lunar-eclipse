@@ -18,7 +18,9 @@ export const signUp = async (user: RegisterUserType) => {
 
 	// if user already exists throw exception
 	if (foundUser) {
-		throw new ForbiddenException()
+		throw new ForbiddenException(
+			'You do not have permission to perform this operation'
+		)
 	}
 
 	// hash the user password
