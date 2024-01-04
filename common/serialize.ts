@@ -22,7 +22,6 @@ const serialize = async <T>(
 		if (!safeParse) {
 			const result = await schema.parseAsync(actual)
 
-			// return [result as T, null]
 			return { data: result as T, errors: null }
 		} else {
 			const result = await schema.safeParseAsync(actual)
@@ -42,17 +41,19 @@ const serialize = async <T>(
 					errors[key] = formattedErrors[key]?._errors.join(', ')
 				}
 
-				// return [null, errors]
 				return { data: null, errors }
 			}
 
-			// return [result.data as T, null]
 			return { data: result.data as T, errors: null }
 		}
 	} catch (error) {
 		logger.error(error)
-		// return [null, { failedSerialization: 'failed to serialize input' }]
-		return { data: null, errors: {} }
+		return {
+			data: null,
+			errors: {
+				failedSerialization: 'failed to serialize input'
+			}
+		}
 	}
 }
 
