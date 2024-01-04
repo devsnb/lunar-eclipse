@@ -32,7 +32,8 @@ export const signUp = async (user: RegisterUserType) => {
 			name: user.name,
 			email: user.email,
 			dob: user.dob,
-			password: passwordHash
+			password: passwordHash,
+			sex: user.sex
 		}
 	})
 
