@@ -41,6 +41,22 @@ const config = convict({
 		default: null,
 		nullable: true,
 		env: 'DATABASE_URL'
+	},
+	jwt: {
+		privateKey: {
+			doc: 'Private RSA key to sign the jwt',
+			format: String,
+			default: 'a-private-key',
+			nullable: false,
+			env: 'JWT_PRIVATE_KEY'
+		},
+		publicKey: {
+			doc: 'Public RSA key to verify the jwt',
+			format: String,
+			default: 'a-public-key',
+			nullable: false,
+			env: 'JWT_PUBLIC_KEY'
+		}
 	}
 })
 

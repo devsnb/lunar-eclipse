@@ -20,3 +20,16 @@ export const RegisterUserSchema = z.object({
 })
 
 export type RegisterUserType = z.infer<typeof RegisterUserSchema>
+
+export const LoginUserSchema = z.object({
+	email: z
+		.string()
+		.min(1, 'email cannot be empty')
+		.email('email must be a valid email'),
+	password: z
+		.string()
+		.min(8, 'password must be at least 8 characters')
+		.max(32, 'password cannot exceed 32 characters')
+})
+
+export type LoginUserType = z.infer<typeof LoginUserSchema>

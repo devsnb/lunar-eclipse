@@ -1,7 +1,12 @@
 import * as argon from 'argon2'
 import prisma from '@/lib/prisma'
-import { RegisterUserType } from '@/schema/user.schema'
-import { ForbiddenException } from '@/exceptions'
+import { RegisterUserType, LoginUserType } from '@/schema/user.schema'
+import {
+	BadRequestException,
+	ForbiddenException,
+	NotFoundException
+} from '@/exceptions'
+import { signJwt } from '@/services/jwt.service'
 
 /**
  * User sign up handler
@@ -39,4 +44,37 @@ export const signUp = async (user: RegisterUserType) => {
 
 	// return the newly created user
 	return createdUser
+}
+
+/**
+ * Verifies a user based on provided email & password
+ * @param user input having the email & password of the user
+ * @returns the found user
+ */
+export const signIn = async (user: LoginUserType) => {
+	const foundUser = await prisma.user.findUnique({
+		where: {
+			email: user.email
+		}
+	})
+
+	if (!foundUser) {
+		throw new NotFoundException('no user exists with the provided email')
+	}
+
+	const passwordsMatch = await argon.verify(foundUser.password, user.password)
+
+	if (!passwordsMatch) {
+		throw new BadRequestException('check your inputs & try again')
+	}
+
+	const jwtPayload = {
+		id: foundUser.id,
+		email: foundUser.email,
+		role: foundUser.role
+	}
+
+	const jwt = signJwt(jwtPayload)
+
+	return jwt
 }
