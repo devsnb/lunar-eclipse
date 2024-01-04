@@ -69,12 +69,11 @@ export const signIn = async (user: LoginUserType) => {
 	}
 
 	const jwtPayload = {
-		id: foundUser.id,
 		email: foundUser.email,
 		role: foundUser.role
 	}
 
-	const jwt = signJwt(jwtPayload)
+	const jwt = signJwt(foundUser.id, jwtPayload)
 
 	return jwt
 }

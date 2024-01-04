@@ -23,12 +23,13 @@ const getKeys = () => {
  * @param payload payload for jwt
  * @returns the new jwt in string format
  */
-export const signJwt = (payload: any): string => {
+export const signJwt = (subject: string, payload: any): string => {
 	try {
 		const keys = getKeys()
 		const accessToken = jsonwebtoken.sign(payload, keys.privateKey, {
 			algorithm: 'RS256',
-			expiresIn: '7d'
+			expiresIn: '7d',
+			subject
 		})
 
 		return accessToken

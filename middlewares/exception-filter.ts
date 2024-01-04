@@ -1,6 +1,11 @@
 import { Request, Response, NextFunction } from 'express'
 import logger from '@/common/logger'
-import { BadRequestException, ForbiddenException } from '@/exceptions'
+import {
+	BadRequestException,
+	ForbiddenException,
+	NotFoundException,
+	UnauthorizedException
+} from '@/exceptions'
 
 const HTTPErrorMessages: { [key: number]: string } = {
 	400: 'Bad Request! Please check your inputs',
@@ -29,6 +34,12 @@ export const ExceptionHandler = (
 		message = err.message
 	} else if (err instanceof ForbiddenException) {
 		status = 403
+		message = err.message
+	} else if (err instanceof NotFoundException) {
+		status = 404
+		message = err.message
+	} else if (err instanceof UnauthorizedException) {
+		status = 401
 		message = err.message
 	}
 
