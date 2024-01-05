@@ -1,6 +1,6 @@
 import * as argon from 'argon2'
 import prisma from '@/lib/prisma'
-import { RegisterUserType, LoginUserType } from '@/schema/user.schema'
+import { RegisterUserType, LoginUserType } from '@/schema/auth.schema'
 import {
 	BadRequestException,
 	ForbiddenException,

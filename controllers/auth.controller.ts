@@ -6,7 +6,7 @@ import {
 	LoginUserType,
 	RegisterUserSchema,
 	RegisterUserType
-} from '@/schema/user.schema'
+} from '@/schema/auth.schema'
 import { signUp, signIn } from '@/services/auth.service'
 import { BadRequestException } from '@/exceptions'
 import { isMinAge } from '@/lib/dates'
