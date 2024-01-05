@@ -5,9 +5,11 @@ import {
 	LoginUserSchema,
 	LoginUserType,
 	RegisterUserSchema,
-	RegisterUserType
+	RegisterUserType,
+	UpdatePasswordSchema,
+	UpdatePasswordType
 } from '@/schema/auth.schema'
-import { signUp, signIn } from '@/services/auth.service'
+import { signUp, signIn, updatePassword } from '@/services/auth.service'
 import { BadRequestException } from '@/exceptions'
 import { isMinAge } from '@/lib/dates'
 
@@ -60,3 +62,23 @@ export const login = useExceptionFilter(async (req: Request, res: Response) => {
 
 	return res.status(200).json({ accessToken: token })
 })
+
+/**
+ * Lets user update their password
+ */
+export const changePassword = useExceptionFilter(
+	async (req: Request, res: Response) => {
+		const { data, errors } = await serialize<UpdatePasswordType>(
+			UpdatePasswordSchema,
+			req.body
+		)
+
+		if (!data) {
+			throw new BadRequestException('check your inputs & try again', errors)
+		}
+
+		await updatePassword(data)
+
+		res.status(200).json({ message: 'success' })
+	}
+)

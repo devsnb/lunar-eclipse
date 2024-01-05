@@ -1,9 +1,11 @@
 import { Router } from 'express'
-import { register, login } from '@/controllers/auth.controller'
+import { register, login, changePassword } from '@/controllers/auth.controller'
+import { useAuthentication } from '@/middlewares'
 
-const userRouter = Router()
+const authRoutes = Router()
 
-userRouter.post('/register', register)
-userRouter.post('/login', login)
+authRoutes.post('/register', register)
+authRoutes.post('/login', login)
+authRoutes.post('/change-password', useAuthentication(), changePassword)
 
-export default userRouter
+export default authRoutes

@@ -1,6 +1,11 @@
 import * as argon from 'argon2'
 import prisma from '@/lib/prisma'
-import { RegisterUserType, LoginUserType } from '@/schema/auth.schema'
+import {
+	RegisterUserType,
+	LoginUserType,
+	UpdatePasswordSchema,
+	UpdatePasswordType
+} from '@/schema/auth.schema'
 import {
 	BadRequestException,
 	ForbiddenException,
@@ -76,4 +81,40 @@ export const signIn = async (user: LoginUserType) => {
 	const jwt = signJwt(foundUser.id, jwtPayload)
 
 	return jwt
+}
+
+/**
+ * Updates the password of an existing user
+ * @param details the object containing email, password & new password
+ */
+export const updatePassword = async (details: UpdatePasswordType) => {
+	const foundUser = await prisma.user.findUnique({
+		where: {
+			email: details.email
+		}
+	})
+
+	if (!foundUser) {
+		throw new NotFoundException('no user found')
+	}
+
+	const isValidPassword = await argon.verify(
+		foundUser.password,
+		details.currentPassword
+	)
+
+	if (!isValidPassword) {
+		throw new BadRequestException('invalid password')
+	}
+
+	const newHashedPassword = await argon.hash(details.newPassword)
+
+	await prisma.user.update({
+		data: {
+			password: newHashedPassword
+		},
+		where: {
+			email: details.email
+		}
+	})
 }

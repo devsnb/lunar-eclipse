@@ -33,3 +33,20 @@ export const LoginUserSchema = z.object({
 })
 
 export type LoginUserType = z.infer<typeof LoginUserSchema>
+
+export const UpdatePasswordSchema = z.object({
+	email: z
+		.string()
+		.min(1, 'email cannot be empty')
+		.email('email must be a valid email'),
+	currentPassword: z
+		.string()
+		.min(8, 'password must be at least 8 characters')
+		.max(32, 'password cannot exceed 32 characters'),
+	newPassword: z
+		.string()
+		.min(8, 'password must be at least 8 characters')
+		.max(32, 'password cannot exceed 32 characters')
+})
+
+export type UpdatePasswordType = z.infer<typeof UpdatePasswordSchema>
